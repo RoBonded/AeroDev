@@ -355,7 +355,159 @@
     .foot-links a { font-size:.75rem; font-weight:500; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); text-decoration:none; transition:color .2s; }
     .foot-links a:hover { color:var(--text); }
 
-    /* ═══════════ RESPONSIVE ═══════════ */
+    /* ═══════════ PREMIUM SCROLL ANIMATIONS ═══════════ */
+
+    /* Cards enter from different angles */
+    .reveal-left  { opacity:0; transform:translateX(-40px); transition:opacity .8s var(--ease), transform .8s var(--ease); }
+    .reveal-right { opacity:0; transform:translateX(40px);  transition:opacity .8s var(--ease), transform .8s var(--ease); }
+    .reveal-scale { opacity:0; transform:scale(.92);         transition:opacity .8s var(--ease), transform .8s var(--ease); }
+    .reveal-left.on, .reveal-right.on, .reveal-scale.on { opacity:1; transform:none; }
+
+    /* Section active indicator — left border light sweep */
+    section { border-left:2px solid transparent; padding-left:0; transition:border-color .6s; }
+    section.in-view { border-color:transparent; }
+
+    /* Floating section number watermark */
+    .sec-watermark {
+      position:absolute; right:2rem; top:50%; transform:translateY(-50%);
+      font-family:'Syne',sans-serif; font-size:clamp(6rem,15vw,14rem); font-weight:800;
+      color:rgba(124,58,237,.04); line-height:1; pointer-events:none;
+      user-select:none; letter-spacing:-.06em;
+      transition:color 1s;
+    }
+    section.in-view .sec-watermark { color:rgba(124,58,237,.055); }
+
+    /* Scroll-driven line sweep on section enter */
+    .sec-line {
+      position:absolute; bottom:0; left:0; height:1px;
+      background:linear-gradient(90deg, var(--v1), var(--pink), transparent);
+      width:0; transition:width 1.4s var(--ease2);
+    }
+    section.in-view .sec-line { width:40%; }
+
+    /* Card stagger enter from bottom with blur */
+    .card-enter {
+      opacity:0;
+      transform:translateY(36px);
+      filter:blur(4px);
+      transition:opacity .75s var(--ease), transform .75s var(--ease), filter .75s var(--ease);
+    }
+    .card-enter.on { opacity:1; transform:translateY(0); filter:blur(0); }
+    .card-enter.d1 { transition-delay:.08s; }
+    .card-enter.d2 { transition-delay:.18s; }
+    .card-enter.d3 { transition-delay:.28s; }
+    .card-enter.d4 { transition-delay:.38s; }
+
+    /* Glow sweep on section enter */
+    section::after {
+      content:''; position:absolute; inset:0; pointer-events:none;
+      background:radial-gradient(ellipse 60% 40% at 50% 100%, rgba(124,58,237,.04), transparent 65%);
+      opacity:0; transition:opacity 1.2s;
+    }
+    section.in-view::after { opacity:1; }
+
+    /* Stat number count-up pop */
+    .sg-n { transition:color .4s; }
+
+    /* Horizontal scroll-driven marquee for skills */
+    .marquee-wrap { overflow:hidden; mask-image:linear-gradient(90deg,transparent,black 10%,black 90%,transparent); margin:3rem 0; }
+    .marquee-track { display:flex; gap:1.5rem; width:max-content; animation:marqueeScroll 22s linear infinite; }
+    .marquee-track:hover { animation-play-state:paused; }
+    @keyframes marqueeScroll { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+    .marquee-item {
+      white-space:nowrap; font-family:'Syne',sans-serif; font-size:.75rem; font-weight:700;
+      letter-spacing:.12em; text-transform:uppercase;
+      color:var(--muted); padding:.5rem 1.4rem;
+      border:1px solid var(--border); border-radius:100px;
+      transition:color .2s, border-color .2s;
+    }
+    .marquee-item:hover { color:var(--v3); border-color:var(--border2); }
+
+    /* ════════════════════════════
+       MICRO-INTERACTIONS & POLISH
+    ════════════════════════════ */
+
+    /* Pill hover lift */
+    .pill { transition:transform .3s var(--ease), background .25s, border-color .25s, color .25s; }
+    .pill:hover { transform:translateY(-2px); }
+
+    /* Chip hover */
+    .chip { transition:transform .3s var(--ease), background .25s, border-color .25s, color .25s; cursor:default; }
+    .chip:hover { transform:translateY(-2px); background:rgba(124,58,237,.2); border-color:rgba(124,58,237,.4); color:#fff; }
+
+    /* Button press feel */
+    .btn:active { transform:scale(.96) translateY(1px) !important; }
+
+    /* Nav link animated underline sweep */
+    .nav-links a { position:relative; }
+    .nav-links a::after {
+      content:''; position:absolute; bottom:2px; left:.9rem; right:.9rem; height:1px;
+      background:var(--v3); transform:scaleX(0); transform-origin:left;
+      transition:transform .35s var(--ease);
+    }
+    .nav-links a:hover::after, .nav-links a.active::after { transform:scaleX(1); }
+
+    /* Footer smooth entrance */
+    footer { opacity:0; transform:translateY(20px); transition:opacity .8s var(--ease), transform .8s var(--ease); }
+    footer.on { opacity:1; transform:translateY(0); }
+
+    /* Skill bar glow when filled */
+    .sk-fill.on { animation:barShine 1.8s .3s var(--ease2) forwards; }
+    @keyframes barShine { 0%{box-shadow:none} 40%{box-shadow:0 0 14px rgba(159,103,255,.7)} 100%{box-shadow:0 0 5px rgba(159,103,255,.25)} }
+
+    /* Section dividers animate in */
+    hr.div { opacity:0; transform:scaleX(.5); transition:opacity 1s var(--ease), transform 1s var(--ease); }
+    hr.div.on { opacity:1; transform:scaleX(1); }
+
+    /* CTA arrow slide on hover */
+    .c-cta span, .cc-action span { display:inline-block; transition:transform .3s var(--ease); }
+    .c-cta:hover span, .cc-action:hover span { transform:translateX(6px); }
+
+    /* Marquee hover lift */
+    .marquee-item { transition:color .25s, border-color .25s, transform .3s var(--ease), background .25s; }
+    .marquee-item:hover { transform:translateY(-3px) scale(1.04); background:rgba(124,58,237,.08); }
+
+    /* Progress bar glow */
+    #bar { box-shadow:0 0 8px rgba(159,103,255,.5); }
+
+    /* Feat icon spin on hover */
+    .feat-icon { transition:transform .5s var(--ease), background .3s, border-color .3s; }
+    .feat:hover .feat-icon { transform:rotate(8deg) scale(1.1); background:rgba(124,58,237,.15); border-color:rgba(124,58,237,.3); }
+
+    /* Svc number colour shift on card hover */
+    .svc-num { transition:color .4s var(--ease); }
+    .card:hover .svc-num { color:rgba(124,58,237,.28); }
+
+    /* Game thumb overlay fade */
+    .game-ov { transition:opacity .45s var(--ease); }
+    .game-card:hover .game-ov { opacity:.55; }
+
+    /* Animated gradient border on nav CTA hover */
+    .nav-cta { position:relative; overflow:hidden; }
+    .nav-cta::before {
+      content:''; position:absolute; inset:-1px; border-radius:9px;
+      background:linear-gradient(90deg,var(--v1),var(--pink),var(--v2),var(--v1));
+      background-size:300% 100%; opacity:0; z-index:-1;
+      transition:opacity .3s; animation:borderFlow 3s linear infinite;
+    }
+    .nav-cta:hover::before { opacity:1; }
+    @keyframes borderFlow { 0%{background-position:0%} 100%{background-position:300%} }
+
+    /* Intro bar shimmer */
+    @keyframes introBarShimmer { 0%,100%{background-position:0%} 50%{background-position:100%} }
+    .intro-bar {
+      background:linear-gradient(90deg,transparent 0%,var(--v2) 40%,var(--pink) 60%,transparent 100%);
+      background-size:300% 100%;
+      animation:introBarShimmer 2s ease-in-out infinite;
+    }
+
+    /* Smooth section glow expand on enter */
+    .sec-glow { transition:opacity 1.2s var(--ease); }
+
+    /* Contact cc-icon hover pulse */
+    .cc-icon { transition:transform .35s var(--ease), box-shadow .35s; }
+    .card:hover .cc-icon { transform:scale(1.08); box-shadow:0 8px 24px rgba(88,101,242,.35); }
+
     @media (max-width:960px) {
       .hero-grid, .about-grid { grid-template-columns:1fr; }
       .hero-right { display:none; }
@@ -416,6 +568,8 @@
 
 <!-- ═══════════ HERO ═══════════ -->
 <section id="home">
+  <div class="sec-watermark">01</div>
+  <div class="sec-line"></div>
   <div class="sec-glow"></div>
   <div class="wrap">
     <div class="hero-grid">
@@ -468,6 +622,8 @@
 
 <!-- ═══════════ GAMES ═══════════ -->
 <section id="games">
+  <div class="sec-watermark">02</div>
+  <div class="sec-line"></div>
   <div class="sec-glow" style="background:radial-gradient(ellipse at 50% 0%,rgba(99,102,241,.15),transparent 65%);"></div>
   <div class="wrap">
     <div class="sh">
@@ -484,7 +640,7 @@
 
     <div class="games-grid" style="grid-template-columns:1fr 1fr;max-width:860px;margin:0 auto;">
 
-      <div class="card card-v reveal d1" style="padding:0;overflow:hidden;gap:0;">
+      <div class="card card-v card-enter d1" style="padding:0;overflow:hidden;gap:0;">
         <div style="width:100%;aspect-ratio:16/9;background:linear-gradient(135deg,rgba(124,58,237,.35),rgba(192,132,252,.1));display:flex;align-items:center;justify-content:center;position:relative;border-radius:24px 24px 0 0;">
           <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="rgba(196,181,253,.45)" stroke-width=".8">
             <rect x="2" y="3" width="20" height="14" rx="2.5"/><path d="M8 21h8M12 17v4"/>
@@ -500,7 +656,7 @@
         </div>
       </div>
 
-      <div class="card card-i reveal d2" style="padding:0;overflow:hidden;gap:0;">
+      <div class="card card-i card-enter d2" style="padding:0;overflow:hidden;gap:0;">
         <div style="width:100%;aspect-ratio:16/9;background:linear-gradient(135deg,rgba(99,102,241,.32),rgba(124,58,237,.12));display:flex;align-items:center;justify-content:center;position:relative;border-radius:24px 24px 0 0;">
           <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="rgba(165,180,252,.45)" stroke-width=".8">
             <path d="M3 6h18M3 12h10M3 18h6"/>
@@ -519,7 +675,7 @@
 
     </div>
 
-    <div class="card card-dark reveal" style="margin-top:1.3rem;max-width:860px;margin-left:auto;margin-right:auto;flex-direction:row;align-items:center;gap:2rem;padding:2rem 2.4rem;flex-wrap:wrap;">
+    <div class="card card-dark card-enter d3" style="margin-top:1.3rem;max-width:860px;margin-left:auto;margin-right:auto;flex-direction:row;align-items:center;gap:2rem;padding:2rem 2.4rem;flex-wrap:wrap;">
       <div style="flex:1;min-width:200px;">
         <div class="pill pill-muted" style="margin-bottom:.7rem;">Commission</div>
         <div class="c-title">Want Custom UI for Your Game?</div>
@@ -531,10 +687,35 @@
   </div>
 </section>
 
+
+  <!-- Marquee -->
+  <div class="marquee-wrap">
+    <div class="marquee-track">
+      <span class="marquee-item">In-Game Menus</span>
+      <span class="marquee-item">HUD Design</span>
+      <span class="marquee-item">UI Animations</span>
+      <span class="marquee-item">Roblox Studio</span>
+      <span class="marquee-item">Clean Design</span>
+      <span class="marquee-item">Smooth Interactions</span>
+      <span class="marquee-item">Player-First</span>
+      <span class="marquee-item">Custom UI</span>
+      <span class="marquee-item">In-Game Menus</span>
+      <span class="marquee-item">HUD Design</span>
+      <span class="marquee-item">UI Animations</span>
+      <span class="marquee-item">Roblox Studio</span>
+      <span class="marquee-item">Clean Design</span>
+      <span class="marquee-item">Smooth Interactions</span>
+      <span class="marquee-item">Player-First</span>
+      <span class="marquee-item">Custom UI</span>
+    </div>
+  </div>
+
 <hr class="div"/>
 
 <!-- ═══════════ ABOUT ═══════════ -->
 <section id="about">
+  <div class="sec-watermark">03</div>
+  <div class="sec-line"></div>
   <div class="sec-glow" style="background:radial-gradient(ellipse at 50% 0%,rgba(232,121,249,.1),transparent 65%);"></div>
   <div class="wrap">
     <div class="about-grid">
@@ -599,6 +780,8 @@
 
 <!-- ═══════════ SERVICES ═══════════ -->
 <section id="services">
+  <div class="sec-watermark">04</div>
+  <div class="sec-line"></div>
   <div class="sec-glow"></div>
   <div class="wrap">
     <div class="sh center">
@@ -632,6 +815,8 @@
 
 <!-- ═══════════ CONTACT ═══════════ -->
 <section id="contact">
+  <div class="sec-watermark">05</div>
+  <div class="sec-line"></div>
   <div class="sec-glow" style="background:radial-gradient(ellipse at 50% 0%,rgba(232,121,249,.12),transparent 65%);"></div>
   <div class="wrap">
     <div class="sh center">
@@ -646,7 +831,7 @@
     <div class="contact-grid">
       <div class="card card-v ccard reveal d1" onclick="copyDiscord()" style="cursor:pointer;">
         <div class="cc-icon" style="background:linear-gradient(135deg,#5865F2,#7289da);">
-          <svg viewBox="0 0 24 24" fill="white" width="26" height="26"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/></svg>
+          <svg viewBox="0 0 127.14 96.36" fill="white" width="26" height="26"><path d="M107.7 8.07A105.15 105.15 0 0 0 81.47 0a72.06 72.06 0 0 0-3.36 6.83 97.68 97.68 0 0 0-29.11 0A72.37 72.37 0 0 0 45.64 0a105.89 105.89 0 0 0-26.25 8.09C2.79 32.65-1.71 56.6.54 80.21a105.73 105.73 0 0 0 32.17 16.15 77.7 77.7 0 0 0 6.89-11.11 68.42 68.42 0 0 1-10.85-5.18c.91-.66 1.8-1.34 2.66-2a75.57 75.57 0 0 0 64.32 0c.87.71 1.76 1.39 2.66 2a68.68 68.68 0 0 1-10.87 5.19 77 77 0 0 0 6.89 11.1 105.25 105.25 0 0 0 32.19-16.14c2.64-27.38-4.51-51.11-18.9-72.15ZM42.45 65.69C36.18 65.69 31 60 31 53s5-12.74 11.43-12.74S54 46 53.89 53s-5.05 12.69-11.44 12.69Zm42.24 0C78.41 65.69 73.25 60 73.25 53s5-12.74 11.44-12.74S96.23 46 96.12 53s-5.04 12.69-11.43 12.69Z"/></svg>
         </div>
         <div class="cc-type">Discord</div>
         <div class="cc-title">Message on Discord</div>
@@ -656,7 +841,7 @@
 
       <a class="card card-i ccard reveal d2" href="https://discord.gg/h87DFmW2x" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;">
         <div class="cc-icon" style="background:linear-gradient(135deg,#5865F2,#7289da);">
-          <svg viewBox="0 0 24 24" fill="white" width="26" height="26"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/></svg>
+          <svg viewBox="0 0 127.14 96.36" fill="white" width="26" height="26"><path d="M107.7 8.07A105.15 105.15 0 0 0 81.47 0a72.06 72.06 0 0 0-3.36 6.83 97.68 97.68 0 0 0-29.11 0A72.37 72.37 0 0 0 45.64 0a105.89 105.89 0 0 0-26.25 8.09C2.79 32.65-1.71 56.6.54 80.21a105.73 105.73 0 0 0 32.17 16.15 77.7 77.7 0 0 0 6.89-11.11 68.42 68.42 0 0 1-10.85-5.18c.91-.66 1.8-1.34 2.66-2a75.57 75.57 0 0 0 64.32 0c.87.71 1.76 1.39 2.66 2a68.68 68.68 0 0 1-10.87 5.19 77 77 0 0 0 6.89 11.1 105.25 105.25 0 0 0 32.19-16.14c2.64-27.38-4.51-51.11-18.9-72.15ZM42.45 65.69C36.18 65.69 31 60 31 53s5-12.74 11.43-12.74S54 46 53.89 53s-5.05 12.69-11.44 12.69Zm42.24 0C78.41 65.69 73.25 60 73.25 53s5-12.74 11.44-12.74S96.23 46 96.12 53s-5.04 12.69-11.43 12.69Z"/></svg>
         </div>
         <div class="cc-type">Discord Server</div>
         <div class="cc-title">Join the Server</div>
@@ -739,13 +924,50 @@ document.addEventListener('click', e => {
 const ro = new IntersectionObserver(entries => {
   entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('on'); ro.unobserve(e.target); } });
 }, { threshold:0.07, rootMargin:'0px 0px -40px 0px' });
-document.querySelectorAll('.reveal, .split-line').forEach(el => ro.observe(el));
+document.querySelectorAll('.reveal, .split-line, .reveal-left, .reveal-right, .reveal-scale, .card-enter, hr.div').forEach(el => ro.observe(el));
+
+/* ── FOOTER REVEAL ── */
+const footObs = new IntersectionObserver(([e]) => {
+  if (e.isIntersecting) { document.querySelector('footer').classList.add('on'); footObs.disconnect(); }
+}, { threshold:0.2 });
+footObs.observe(document.querySelector('footer'));
+
+/* ── SECTION IN-VIEW ── */
+const secObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    e.target.classList.toggle('in-view', e.isIntersecting);
+  });
+}, { threshold:0.12 });
+document.querySelectorAll('section').forEach(s => secObs.observe(s));
 
 /* ── SKILL BARS ── */
 const skObs = new IntersectionObserver(entries => {
   entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('on'); skObs.unobserve(e.target); } });
 }, { threshold:0.4 });
 document.querySelectorAll('.sk-fill').forEach(el => skObs.observe(el));
+
+/* ── STAT NUMBER COUNT-UP ── */
+function animCount(el, target, dur = 1400) {
+  const t0 = performance.now();
+  const fmt = n => n >= 1000 ? (n/1000).toFixed(1).replace('.0','')+'K' : String(Math.round(n));
+  (function tick(now) {
+    const p = Math.min((now - t0) / dur, 1);
+    const ease = 1 - Math.pow(1 - p, 4);
+    el.textContent = fmt(ease * target);
+    if (p < 1) requestAnimationFrame(tick);
+    else el.textContent = fmt(target);
+  })(t0);
+}
+const countObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (!e.isIntersecting) return;
+    const el = e.target;
+    const raw = el.dataset.count;
+    if (raw) animCount(el, parseFloat(raw));
+    countObs.unobserve(el);
+  });
+}, { threshold:0.5 });
+document.querySelectorAll('[data-count]').forEach(el => countObs.observe(el));
 
 /* ── CARD 3D TILT ── */
 document.querySelectorAll('.card').forEach(card => {
@@ -762,11 +984,18 @@ document.querySelectorAll('.card').forEach(card => {
   });
 });
 
-/* ── PARALLAX ORBS ── */
+/* ── PARALLAX: orbs + section watermarks ── */
 window.addEventListener('scroll', () => {
   const y = window.scrollY;
+  // Orbs
   document.querySelectorAll('.orb').forEach((o, i) => {
     o.style.transform = `translateY(${y * ([0.035,-0.022,0.055][i] ?? 0.03)}px)`;
+  });
+  // Watermarks drift slower than scroll
+  document.querySelectorAll('.sec-watermark').forEach(w => {
+    const rect = w.closest('section').getBoundingClientRect();
+    const progress = -rect.top / window.innerHeight;
+    w.style.transform = `translateY(calc(-50% + ${progress * 40}px))`;
   });
 }, { passive:true });
 
@@ -780,6 +1009,22 @@ window.addEventListener('scroll', () => {
     requestAnimationFrame(drift);
   })();
 })();
+
+/* ── SECTION ENTRANCE GLOW PULSE ── */
+const glowObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (!e.isIntersecting) return;
+    const glow = e.target.querySelector('.sec-glow');
+    if (!glow) return;
+    glow.style.transition = 'opacity .1s';
+    glow.style.opacity = '0';
+    setTimeout(() => {
+      glow.style.transition = 'opacity 1.2s cubic-bezier(.22,1,.36,1)';
+      glow.style.opacity = '1';
+    }, 80);
+  });
+}, { threshold:0.1 });
+document.querySelectorAll('section').forEach(s => glowObs.observe(s));
 
 /* ── COPY DISCORD ── */
 function copyDiscord() {
